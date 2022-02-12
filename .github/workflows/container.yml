@@ -5,9 +5,9 @@ on:
     branches:
     # or master
       - main
-    paths:
+    # paths:
      # run when the changes are accored in this directory
-      - 'packages/container/**'
+      # - 'packages/container/**'
 
 defaults:
   run:
