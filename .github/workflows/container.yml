@@ -1,26 +1,63 @@
-name: deploy-container
+# name: deploy-container
 
-on: 
+# on: 
+#   push:
+#     branches: [ main ] # or master
+#     paths:
+#       - 'packages/container/**' # run when the changes are accored in this directory
+
+# defaults:
+#   run:
+#     working-directory: packages/container # ex.: npm run ..; root from where to run commands
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest # specifing virtual machine
+
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: npm install
+#       - run: npm run build # creates dist directory
+
+#       - uses: chrislennon/action-aws-cli@v1.1 # access to aws cli
+#       - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest # sync dist with s3
+#         env: 
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ] # or master
-    paths:
-      - 'packages/container/**' # run when the changes are accored in this directory
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-defaults:
-  run:
-    working-directory: packages/container # ex.: npm run ..; root from where to run commands
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
-    runs-on: ubuntu-latest # specifing virtual machine
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm run build # creates dist directory
 
-      - uses: chrislennon/action-aws-cli@v1.1 # access to aws cli
-      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest # sync dist with s3
-        env: 
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
