@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main # or master
-    # paths:
-      # - 'packages/marketing/**' # run when the changes are accored in this directory
+    paths:
+      - 'packages/marketing/**' # run when the changes are accored in this directory
 
 defaults:
   run:
