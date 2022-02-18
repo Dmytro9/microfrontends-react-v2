@@ -1,4 +1,5 @@
 # Navigating
 
 ## Container - use Browser History
-## Sub apps - use Memory History
+## Sub apps - use Memory History with initial state
+## Suspense && lazy - to lazy load pages (code related to the page currently on the screen)
