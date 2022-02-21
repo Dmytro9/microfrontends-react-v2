@@ -264,21 +264,21 @@ import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Column from 'primevue/column';
-import DataTable from 'primevue/datatable';
-import Chart from 'primevue/chart';
-import ProgressBar from 'primevue/progressbar';
+// import DataTable from 'primevue/datatable';
+// import Chart from 'primevue/chart';
+// import ProgressBar from 'primevue/progressbar';
 
 export default {
   components: {
-    ProgressBar,
+    // ProgressBar,
     Checkbox,
     Panel,
     Dropdown,
     InputText,
     Button,
     Column,
-    DataTable,
-    Chart,
+    // DataTable,
+    // Chart,
   },
   data() {
     return {
