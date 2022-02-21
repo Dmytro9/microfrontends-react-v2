@@ -1,0 +1,35 @@
+name: deploy-dashboard
+
+on: 
+  push:
+    branches:
+      - main # or master
+    paths:
+      - 'packages/dashboard/**' # run when the changes are accored in this directory
+
+defaults:
+  run:
+    working-directory: packages/dashboard # ex.: npm run ..; root from where to run commands
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # specifing virtual machine
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run build # creates dist directory
+
+      - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
+        run: echo 'ACTIONS_ALLOW_UNSECURE_COMMANDS=true' >> $GITHUB_ENV
+        
+      - uses: chrislennon/action-aws-cli@v1.1 # access to aws cli
+      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/dashboard/latest # sync dist with s3
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/dashboard/latest/remoteEntry.js"
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
